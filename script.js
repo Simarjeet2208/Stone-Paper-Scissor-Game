@@ -1,5 +1,6 @@
 
 const ans = document.querySelectorAll('.ans')
+const matchResult = document.querySelector('#matchResult')
 // console.log(ans);
 
 const answerDisplay = document.querySelector('#result')
@@ -9,7 +10,6 @@ let score =  JSON.parse(localStorage.getItem('points')) || {
     loses:0,
     ties:0
 } 
-
 
 
 function computerAnswer(){
@@ -31,9 +31,7 @@ function computerAnswer(){
 function ourAnswer(guess){
 
     let result = '';
-
     let ourGuess = guess;
-    // console.log(ourGuess);
     let answer = computerAnswer();
 
     if (ourGuess === 'rock') {
@@ -79,22 +77,31 @@ function ourAnswer(guess){
         score.loses +=1;
     }    
 
+    
+    matchResult.innerHTML = result;
+
     jsonScore = JSON.stringify(score)
     localStorage.setItem('points',jsonScore)
 
     ans[0].innerHTML = ourGuess;
     ans[1].innerHTML = answer;
     finalScore = `Wins:${score.wins} , Loses:${score.loses} , ties:${score.ties}`
-//     alert(`you ${result}, your answer is ${ourGuess} and opponent's ${answer}
+
+    answerDisplay.innerHTML = finalScore ;
+
+    //     alert(`you ${result}, your answer is ${ourGuess} and opponent's ${answer}
 // ${finalScore}`)
     // return result;
-    answerDisplay.innerHTML = finalScore ;
 } 
+
 function restart() {
     score.wins = 0;
     score.loses = 0;
     score.ties = 0;
     localStorage.removeItem('points')
     answerDisplay.innerHTML = `Wins:0 , Loses:0 , ties:0`;
+    matchResult.innerHTML = '';
+    ans[0].innerHTML = '';
+    ans[1].innerHTML = '';
 }
 
